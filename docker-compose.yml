@@ -1,0 +1,19 @@
+version: '2'
+services:
+
+  content-server:
+    build: 
+      context: ./content-server
+      dockerfile: ../Dockerfile
+    image: content-server
+    ports:
+    - "8080"
+
+  sorter:
+    build: 
+      context: ./sorter
+      dockerfile: ../Dockerfile
+    image: sorter
+    ports:
+    - "8080"
+
