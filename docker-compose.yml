@@ -8,8 +8,6 @@ services:
     image: content-server
     ports:
     - "8081:8081"
-#   networks:
-#    -  mendix
     container_name: content-server 
 
 
@@ -26,13 +24,5 @@ services:
     - content-server
     command:
     - ${CONTENT_DIR}
-#    deploy:
-#      mode: replicated
-#      replicas: 2
-#    networks:
-#    -  mendix
 
-#networks:
-#   mendix:
-#      driver: bridge
 
