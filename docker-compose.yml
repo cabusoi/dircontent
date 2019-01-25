@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
 
   content-server:
@@ -7,13 +7,32 @@ services:
       dockerfile: ./Dockerfile
     image: content-server
     ports:
-    - "8080"
+    - "8081:8081"
+#   networks:
+#    -  mendix
+    container_name: content-server 
+
 
   sorter:
     build: 
       context: ./sorter
       dockerfile: ./Dockerfile
     image: sorter
-    ports:
-    - "8080"
+    volumes:
+    - .:/data
+    environment:
+    - CONTENT_DIR=/data/medium_example
+    depends_on:
+    - content-server
+    command:
+    - ${CONTENT_DIR}
+#    deploy:
+#      mode: replicated
+#      replicas: 2
+#    networks:
+#    -  mendix
+
+#networks:
+#   mendix:
+#      driver: bridge
 

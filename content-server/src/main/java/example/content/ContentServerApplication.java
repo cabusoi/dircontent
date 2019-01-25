@@ -1,8 +1,8 @@
 package example.content;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 import javax.validation.constraints.NotBlank;
@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ContentServerApplication {
 
-	Map<String, ConcurrentSkipListSet<String>> content = new HashMap<>();
+	Map<String, ConcurrentSkipListSet<String>> content = new ConcurrentHashMap<>();
 
 	public static void main(String[] args) {
 		SpringApplication.run(ContentServerApplication.class, args);
 	}
 
-	@PostMapping(path = { "/content"})
+	@PostMapping(path = { "/content" })
 	public void post(@RequestParam("key") @NotBlank String key, @RequestParam(name = "value") @NotBlank String value) {
 		if (!content.containsKey(key)) {
 			content.put(key, new ConcurrentSkipListSet<>());
@@ -32,11 +32,11 @@ public class ContentServerApplication {
 		content.get(key).add(value);
 	}
 
-	@GetMapping(path = { "/key"})
+	@GetMapping(path = { "/key" })
 	public Set<String> get(@RequestParam("key") @NotBlank String key) {
 		ConcurrentSkipListSet<String> result = content.get(key);
 		return result;
-		
+
 	}
 
 }
